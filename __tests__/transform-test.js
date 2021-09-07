@@ -8,23 +8,6 @@ describe("lodash get to optional chaining", () => {
     defineTest(__dirname, "transform");
   });
   describe("flags", () => {
-    describe("skipTemplateStrings", () => {
-      defineTest(
-        __dirname,
-        "transform",
-        { skipTemplateStrings: true },
-        "skipTemplateStrings"
-      );
-    });
-    describe("skipVariables", () => {
-      defineTest(
-        __dirname,
-        "transform",
-        { skipVariables: true },
-        "skipVariables"
-      );
-    });
-
     describe("typescript", () => {
       defineTest(
         __dirname,
@@ -35,13 +18,5 @@ describe("lodash get to optional chaining", () => {
         { parser: 'ts' },
       );
     });
-  });
-
-  describe("mangle nested object checks", () => {
-    defineTest(__dirname, "transform", null, "nestedObjects");
-  });
-
-  describe("import from lodash/fp", () => {
-    defineTest(__dirname, "transform", null, "lodashFP")
   });
 });

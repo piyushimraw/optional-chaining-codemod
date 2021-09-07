@@ -115,7 +115,7 @@ const replaceGetWithOptionalChain = (node, j, shouldSwapArgs) =>
     ? addWithNullishCoalescing(node, j)
     : generateOptionalChain(shouldSwapArgs ? swapArguments(node) : node, j);
 
-const mangleLodashGets = (ast, j, options, isTypescript, importLiteral = "lodash") => {
+const mangleLodashGets = (ast, j, options, isTypescript, importLiteral = "core/helpers") => {
   const literal = isTypescript ? "StringLiteral" : "Literal";
 
   const getFirstNode = () => ast.find(j.Program).get("body", 0).node;
@@ -126,7 +126,7 @@ const mangleLodashGets = (ast, j, options, isTypescript, importLiteral = "lodash
 
   const getImportSpecifier = ast
     .find("ImportDeclaration", { source: { type: literal, value: importLiteral } })
-    .find("ImportSpecifier", { imported: { name: "get" } });
+    .find("ImportSpecifier", { imported: { name: "getProperty" } });
   if (getImportSpecifier.length) {
     const getName = getImportSpecifier.get().value.local.name;
     ast
@@ -181,7 +181,7 @@ const mangleLodashGets = (ast, j, options, isTypescript, importLiteral = "lodash
       .find("CallExpression", {
         callee: {
           object: { name: lodashDefaultImportName },
-          property: { name: "get" }
+          property: { name: "getProperty" }
         }
       })
       .replaceWith(node =>
